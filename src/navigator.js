@@ -6,10 +6,6 @@ import {createStackNavigator} from '@react-navigation/stack'
 
 import SplaschScreen from './modul/splashScreen'
 import HomeScreen from './modul/component';
-import ListPokemon from './modul/component/pokemon';
-import ListItem from './modul/component/item';
-import DetailPokemon from './modul/component/pokemon/detailPokemon';
-import DetailItem from './modul/component/item/detailItem';
 
 
 const Stack = createStackNavigator();
@@ -19,10 +15,6 @@ const navigationScreen = [
     option: { headerTransparent: true },
   },
   { name: 'Home', component: HomeScreen },
-  { name: 'Pokemon', component: ListPokemon },
-  { name: 'Potion', component: ListItem },
-  { name: 'DetailPokemon', component: DetailPokemon },
-  { name: 'DetailPotion', component: DetailItem }
 ];
 
 function AppNavigator() {
