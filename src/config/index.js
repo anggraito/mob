@@ -4,11 +4,11 @@ config.environment = 'staging'
 // config.environment = 'production'
 
 config.URL = {}
-config.URL.staging = 'https://pokeapi.co/api/v2'
-// config.URL.production = 'https://pokeapi.co/v2'
+config.URL.staging = 'https://dev.dummy-api.alamisharia.co.id'
+config.URL.production = 'https://dev.dummy-api.alamisharia.co.id'
 
 config.APP_VERSION = {}
-config.APP_VERSION.ios = '0.0.1'
-config.APP_VERSION.android = '0.0.1'
+config.APP_VERSION.ios = '1.0.0'
+config.APP_VERSION.android = '1.0.0'
 
 export default config
