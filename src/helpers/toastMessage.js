@@ -14,6 +14,6 @@ export const handleResponse = (res) => {
   else if (!res.code ) showToast('Tidak ada respon')
   else {
       if (res.code == 200 || res.code == 201) null
-      else showToast(res.message) //showToast(`${res.message}`)
+      else {console.log('WHYYYYYY---======')} //showToast(`${res.message}`)
   }
 }

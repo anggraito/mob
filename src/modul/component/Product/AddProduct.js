@@ -11,6 +11,7 @@ import actionsAPI from '../../../redux/actions/actionAPI/seller'
 import HeaderNav from '../../fragment/header'
 import { ScrollView } from 'react-native-gesture-handler'
 import { checkNumber } from '../../../helpers/checkerFunction'
+import actions from '../../../redux/actions'
 
 export default function AddProduct({navigation}) {
   //"id penjual", "nama", “satuan", "harga satuan", dan "deskripsi"
@@ -45,17 +46,18 @@ export default function AddProduct({navigation}) {
       hargaSatuan: price,
       deskripsi: desc
     } 
-    // dispacth(act)
-    // .then((res) => {
-    //   console.log('----->est', res)
-    //   if (res.code == 200) {
-    //     showToast('Berhasil menambah penjual')
-    //     setNameVal('')
-    //     setCityVal('')
-    //   }
-    //   setCreateLoading(false)
-    //   handleResponse(res)
-    // })
+    dispacth(actions.productAPI.post_item_product(body))
+    .then((res) => {
+      if (res.code == 200) {
+        setIdSeller(0);setNameVal('');setItem('')
+        setPrice(0);setDesc('')
+        setTimeout(() => {
+          showToast('Berhasil menambah produk')
+        },500)
+      }
+      setCreateLoading(false)
+      handleResponse(res)
+    }).catch(e => showToast(e.message))
   }
 
   function open() {
@@ -66,11 +68,6 @@ export default function AddProduct({navigation}) {
     pickerRef.current.blur();
   }
 
-  const getSeller = () => {
-    //dispacth()
-  }
-
-  console.log('--', idSeller)
 
   return (
     <View style={BG_SET}>
@@ -90,7 +87,7 @@ export default function AddProduct({navigation}) {
           </Picker>
           {listSeller.data.length === 0 && <Text style={Font10('OpenSans-Light', ORANGE_TOMATO)}>Jika seller kosong, input seller terlebih dahulu di menu seller</Text>}
           
-          <TextInput placeholder={'nama'}
+          <TextInput placeholder={'nama produk'}
             style={{borderWidth: 0.8, borderColor: BORDERLINE, paddingHorizontal: 15, borderRadius: 8, marginVertical: 5}}
             value={nameVal} onChangeText={(text) => setNameVal(text)} />
 
@@ -98,11 +95,11 @@ export default function AddProduct({navigation}) {
             style={{borderWidth: 0.8, borderColor: BORDERLINE, paddingHorizontal: 15, borderRadius: 8, marginVertical: 5}}
             value={item} onChangeText={(text) => setItem(text)} />
 
-          <TextInput placeholder={'harga'}
+          <TextInput placeholder={'harga produk'} keyboardType={'numeric'}
             style={{borderWidth: 0.8, borderColor: BORDERLINE, paddingHorizontal: 15, borderRadius: 8, marginVertical: 5}}
             value={price} onChangeText={(text) => setPrice(text)} />
 
-          <TextInput placeholder={'deskripsi'} multiline={true}
+          <TextInput placeholder={'deskripsi produk'} multiline={true}
             maxLength={150} numberOfLines={4} 
             style={{borderWidth: 0.8, borderColor: BORDERLINE, textAlignVertical: 'top', paddingHorizontal: 15, borderRadius: 8, marginVertical: 5}}
             value={desc} onChangeText={(text) => setDesc(text)} />

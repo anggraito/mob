@@ -8,6 +8,6 @@ import productRdx from './actionRedux/product'
 export default action = {
   sellerAPI: seller,
   sellerRdx: sellerRdx,
-  product: product,
+  productAPI: product,
   productRdx: productRdx
 }

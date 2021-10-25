@@ -31,14 +31,16 @@ export default function AddSeller({navigation}) {
     dispacth(action.sellerAPI.post_seller(body, dispacth))
     .then(async(res) => {
       if (res.code == 200) {
-        showToast('Berhasil menambah penjual')
         await dispacth(action.sellerRdx.set_list_seller(res.data))
         setNameVal('')
         setCityVal('')
+        setTimeout(() => {
+          showToast('Berhasil menambah penjual')
+        }, 500)
       }
       setCreateLoading(false)
       handleResponse(res)
-    })
+    }).catch(e => showToast(e.message))
   }
 
 
