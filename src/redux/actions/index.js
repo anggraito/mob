@@ -1,5 +1,7 @@
-import product from "./product";
+import seller from './actionAPI/product'
+// import seller from '../actionsReducer/seller'
 
 export default action = {
-  product: product.actionsAPI
+  seller: seller.actionsAPI,
+  // productRdx: productRedux.actionReducer
 }

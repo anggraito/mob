@@ -7,6 +7,7 @@ import {createStackNavigator} from '@react-navigation/stack'
 import SplaschScreen from './modul/splashScreen'
 import HomeScreen from './modul/component'
 import AddSeller from './modul/component/Seller/AddSeller'
+import AddProduct from './modul/component/Product/AddProduct'
 
 
 const Stack = createStackNavigator();
@@ -16,7 +17,8 @@ const navigationScreen = [
     option: { headerTransparent: true },
   },
   { name: 'Home', component: HomeScreen },
-  { name: 'AddSellerScreen', component: AddSeller }
+  { name: 'AddSellerScreen', component: AddSeller },
+  { name: 'AddProductScreen', component: AddProduct },
 ];
 
 function AppNavigator() {

@@ -32,7 +32,7 @@ export default function HomeScreen({navigation}) {
         )} />
         
         <View style={{flexDirection: 'row', justifyContent: 'space-between', marginTop: 15}}>
-          <TouchableOpacity onPress={() => console.log('lala')}
+          <TouchableOpacity onPress={() => navigation.navigate('AddProductScreen')}
           style={{flex: 1, ...SHADOW_LIGHT, backgroundColor: WHITE, height: normalize(90), width: SCREEN_WIDTH/3, borderRadius: 8, marginHorizontal: 5, ...ITEM_CENTER}}>
             <Text style={Font45('OpenSans-SemiBold')}>+</Text>
             <Text>Produk</Text>
