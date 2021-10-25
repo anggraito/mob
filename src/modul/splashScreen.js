@@ -10,7 +10,7 @@ import { useIsFocused } from '@react-navigation/native'
 export default function SplaschScreen({navigation}) {
   useEffect(() => {
     setTimeout(() => {
-      navigation.navigate('Home')
+      navigation.replace('Home')
     }, 1000)
   })
 

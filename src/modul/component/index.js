@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { FlatList, TextInput, TouchableOpacity, View } from 'react-native'
+import { FlatList, TextInput, TouchableOpacity, View, Text } from 'react-native'
 import { BG_SET, WHITE } from '../../helpers/globalStyles'
 import HeaderNav from '../fragment/header'
 // import ListBoxes from '../fragment/listBoxes'

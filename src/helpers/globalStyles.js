@@ -41,7 +41,7 @@ export const SHADOW_BOTTOM = {
   //add parent with overflow: 'hidden'
 }
 
-export const BG_SET = {flex: 1, backgroundColor: SNOW}
+export const BG_SET = {flex: 1, backgroundColor: WHITE}
 
 export const ROW_BETWEEN_CENTER = {
   flexDirection: 'row', 
