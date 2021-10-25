@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import { FlatList, TextInput, TouchableOpacity, View, Text, Modal, ActivityIndicator } from 'react-native'
 import IconFe from 'react-native-vector-icons/Feather'
 import {Picker} from '@react-native-picker/picker'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { BG_SET, BORDERLINE, Font16, ITEM_CENTER, OPACITY_BLACK_5, SCREEN_WIDTH, 
   STEELBLUE, WHITE, Font12 } from '../../../helpers/globalStyles'
 import { normalize } from '../../../helpers/scallingSize'
@@ -12,6 +12,7 @@ import HeaderNav from '../../fragment/header'
 
 export default function AddProduct({navigation}) {
   //"id penjual", "nama", “satuan", "harga satuan", dan "deskripsi"
+  const [createLoading, setCreateLoading] = useState('')
   const [idSeller, setIdSeller] = useState(null)
   const [nameVal, setNameVal] = useState('')
   const [satuan, setSatuan] = useState('')
@@ -20,6 +21,9 @@ export default function AddProduct({navigation}) {
 
   const pickerRef = useRef()
   const dispacth = useDispatch()
+  const listSeller = useSelector(state => state.seller)
+
+  console.log('listSeller',listSeller)
 
   const AddProductAPI = () => {
     // if (nameVal === '' || cityVal === '') {
@@ -64,10 +68,12 @@ export default function AddProduct({navigation}) {
 
         <Picker
           ref={pickerRef}
-          selectedValue={selectedLanguage}
+          selectedValue={idSeller}
           onValueChange={(itemValue, itemIndex) =>
             setIdSeller(itemValue)
           }>
+            <Picker.Item label='Pilih seller...' value='0' />
+            {listSeller.data.map(item => <Picker.Item label={item.nama} value={item.id} />)}
           {/* <Picker.Item label="Java" value="java" />
           <Picker.Item label="JavaScript" value="js" /> */}
         </Picker>
@@ -76,9 +82,9 @@ export default function AddProduct({navigation}) {
         style={{borderWidth: 0.8, borderColor: BORDERLINE, paddingHorizontal: 15, borderRadius: 8, marginVertical: 5}}
         value={nameVal} onChangeText={(text) => setNameVal(text)} />
 
-        <TextInput placeholder={'kota'}
+        {/* <TextInput placeholder={'kota'}
         style={{borderWidth: 0.8, borderColor: BORDERLINE, paddingHorizontal: 15, borderRadius: 8, marginVertical: 5}}
-        value={cityVal} onChangeText={(text) => setCityVal(text)} />
+        value={cityVal} onChangeText={(text) => setCityVal(text)} /> */}
       </View>
       <View style={{height: normalize(60), justifyContent: 'flex-end'}}>
         <TouchableOpacity onPress={() => AddProductAPI()} style={{backgroundColor: STEELBLUE, ...ITEM_CENTER, flex: 1}}>

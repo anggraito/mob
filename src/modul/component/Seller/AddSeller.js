@@ -15,7 +15,6 @@ export default function AddSeller({navigation}) {
   const [nameVal, setNameVal] = useState('')
   const [cityVal, setCityVal] = useState('')
   const [createLoading, setCreateLoading] = useState('')
-  const listSeller = useSelector(state => state.seller)
 
   const dispacth = useDispatch()
 
@@ -31,11 +30,9 @@ export default function AddSeller({navigation}) {
     } 
     dispacth(action.sellerAPI.post_seller(body, dispacth))
     .then(async(res) => {
-      console.log('----->est', res)
       if (res.code == 200) {
-        await dispacth(action.sellerRdx.set_list_seller(res.data))
-        // {"code": 200, "data": {"id": 64, "kota": "Jakarta", "nama": "Seli"}, "message": "", "status": "Success"}
         showToast('Berhasil menambah penjual')
+        await dispacth(action.sellerRdx.set_list_seller(res.data))
         setNameVal('')
         setCityVal('')
       }
@@ -44,7 +41,6 @@ export default function AddSeller({navigation}) {
     })
   }
 
-  console.log('------------------listSeller', listSeller)
 
   return (
     <View style={BG_SET}>
