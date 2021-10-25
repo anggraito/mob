@@ -14,7 +14,12 @@ export const GOLD = '#fecb07'
 export const STEELBLUE = "#3a5ea9"
 export const SNOW = '#FCFCFD'
 export const DARKSLATE = '#252B42'
+export const ORANGE_TOMATO = '#fc6543'
 export const LIGHTLATE = '#7c7c7c'
+export const BORDERLINE = '#ededed'
+export const MEDIUM_SEAGREEN = '#55b683'
+
+export const OPACITY_BLACK_5 = 'rgba(0,0,0,0.5)'
 
 export const SHADOW_OPC = {
   shadowColor: DARKSLATE,
@@ -41,7 +46,7 @@ export const SHADOW_BOTTOM = {
   //add parent with overflow: 'hidden'
 }
 
-export const BG_SET = {flex: 1, backgroundColor: WHITE}
+export const BG_SET = {flex: 1, backgroundColor: SNOW}
 
 export const ROW_BETWEEN_CENTER = {
   flexDirection: 'row', 
@@ -106,6 +111,13 @@ export const Font18 = (font, color) => ({
 export const Font20 = (font, color) => ({
   fontFamily: font,
   fontSize: normalize(20),
+  color: color ? color : DARKSLATE, 
+  includeFontPadding: false
+})
+
+export const Font45 = (font, color) => ({
+  fontFamily: font,
+  fontSize: normalize(45),
   color: color ? color : DARKSLATE, 
   includeFontPadding: false
 })

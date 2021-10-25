@@ -1,22 +1,15 @@
-import {applyMiddleware, createStore, compose} from 'redux' 
-import createSagaMiddleware from 'redux-saga'
+// import { persistStore, persistCombineReducers } from 'redux-persist'
+import { applyMiddleware, compose, createStore } from 'redux'
+import thunkMiddleware from 'redux-thunk'
 import rootReducer from '../redux/reducers'
-import rootSaga from '../redux/sagas'
-import logger from 'redux-logger'
-import thunk from 'redux-thunk'
-
 
 export default function configureStore(preloadedState) {
-  const sagaMiddleware = createSagaMiddleware()
+  const middlewares = [thunkMiddleware]
+  const middlewareEnhancer = applyMiddleware(...middlewares) // applyMiddleware(thunkMiddleware)
 
-  const middlewares = [sagaMiddleware, logger, thunk]
-  const middlewareEnhancer = applyMiddleware(...middlewares)
+  const composedEnhancers = compose(middlewareEnhancer)
 
-  const enhancers = [middlewareEnhancer]
-  const composedEnhancers = compose(...enhancers)
-
-  const store = {...createStore(rootReducer, preloadedState, composedEnhancers), runSaga: sagaMiddleware.run}
-  store.runSaga(rootSaga)
+  const store = createStore(rootReducer, preloadedState, composedEnhancers)
 
   return store
 }

@@ -5,7 +5,8 @@ import {View, Text, TouchableOpacity} from 'react-native'
 import {createStackNavigator} from '@react-navigation/stack'
 
 import SplaschScreen from './modul/splashScreen'
-import HomeScreen from './modul/component';
+import HomeScreen from './modul/component'
+import AddSeller from './modul/component/Seller/AddSeller'
 
 
 const Stack = createStackNavigator();
@@ -15,6 +16,7 @@ const navigationScreen = [
     option: { headerTransparent: true },
   },
   { name: 'Home', component: HomeScreen },
+  { name: 'AddSellerScreen', component: AddSeller }
 ];
 
 function AppNavigator() {
