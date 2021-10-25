@@ -1,20 +1,21 @@
 import React, { useState } from 'react'
 import { FlatList, TextInput, TouchableOpacity, View, Text, Modal, ActivityIndicator } from 'react-native'
 import IconFe from 'react-native-vector-icons/Feather'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { BG_SET, BORDERLINE, Font16, ITEM_CENTER, OPACITY_BLACK_5, SCREEN_WIDTH, 
   STEELBLUE, WHITE, Font12 } from '../../../helpers/globalStyles'
 import { normalize } from '../../../helpers/scallingSize'
 import { showToast, handleResponse } from '../../../helpers/toastMessage'
-// import actions from '../../../redux/actions'
-import actionsAPI from '../../../redux/actions/actionAPI/seller'
-import actionsReducer from '../../../redux/actions/actionRedux/seller'
+import action from '../../../redux/actions'
+// import actionsAPI from '../../../redux/actions/actionAPI/seller'
+// import actionsReducer from '../../../redux/actions/actionRedux/seller'
 import HeaderNav from '../../fragment/header'
 
 export default function AddSeller({navigation}) {
   const [nameVal, setNameVal] = useState('')
   const [cityVal, setCityVal] = useState('')
   const [createLoading, setCreateLoading] = useState('')
+  const listSeller = useSelector(state => state.seller)
 
   const dispacth = useDispatch()
 
@@ -28,11 +29,11 @@ export default function AddSeller({navigation}) {
       nama: nameVal,
       kota: cityVal
     } 
-    dispacth(actionsAPI.post_seller(body, dispacth))
-    .then((res) => {
+    dispacth(action.sellerAPI.post_seller(body, dispacth))
+    .then(async(res) => {
       console.log('----->est', res)
       if (res.code == 200) {
-        // dispacth(actionsReducer.set_list_seller(res.data))
+        await dispacth(action.sellerRdx.set_list_seller(res.data))
         // {"code": 200, "data": {"id": 64, "kota": "Jakarta", "nama": "Seli"}, "message": "", "status": "Success"}
         showToast('Berhasil menambah penjual')
         setNameVal('')
@@ -42,6 +43,8 @@ export default function AddSeller({navigation}) {
       handleResponse(res)
     })
   }
+
+  console.log('------------------listSeller', listSeller)
 
   return (
     <View style={BG_SET}>
