@@ -1,11 +1,13 @@
 import seller from './actionAPI/seller'
 import sellerRdx from './actionRedux/seller'
+import product from './actionAPI/product'
+import productRdx from './actionRedux/product'
 // import seller from '../actionsReducer/seller'
 
 
 export default action = {
   sellerAPI: seller,
-  sellerRdx: sellerRdx
-  // productRdx: productRedux.actionReducer
+  sellerRdx: sellerRdx,
+  product: product,
+  productRdx: productRdx
 }
-console.log('acc', action)
