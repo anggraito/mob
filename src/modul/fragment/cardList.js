@@ -9,7 +9,7 @@ export default function CardList({item, idx}) {
       <Text style={{flex: 0.5, ...Font12('OpenSans-Regular'), textAlign: 'center'}}>{idx+1}</Text>
       <Text style={{flex: 1, ...Font12('OpenSans-Regular')}}>{item.nama}</Text>
       <Text style={{flex: 2.5, ...Font12('OpenSans-Regular')}}>{item.deskripsi}</Text>
-      <Text style={{flex: 0.5, ...Font12('OpenSans-Regular'), textAlign: 'center', backgroundColor: 'pink'}}>{item.satuan}</Text>
+      <Text style={{flex: 0.5, ...Font12('OpenSans-Regular'), textAlign: 'center'}}>{item.satuan}</Text>
       <Text style={{flex: 1.5, ...Font12('OpenSans-Regular'), textAlign: 'right'}}>Rp{priceSeparator(item.hargaSatuan)}</Text>
     </View>
   )

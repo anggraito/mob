@@ -2,9 +2,11 @@ import constants from '../../../config/constants'
 
 const actionsReducer = {}
 
-actionsReducer.set_list_produk = (data) => ({
+actionsReducer.set_list_produk = (data, val) => ({
   type: constants.LIST_PRODUCT,
-  payload: data
+  payload: {
+    data, val
+  }
 })
 
 export default actionsReducer;

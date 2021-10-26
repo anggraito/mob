@@ -45,10 +45,11 @@ export default function AddProduct({navigation}) {
       deskripsi: desc
     } 
     dispacth(actions.productAPI.post_item_product(body))
-    .then((res) => {
+    .then(async(res) => {
       if (res.code == 200) {
         setIdSeller(0);setNameVal('');setItem('')
         setPrice(0);setDesc('')
+        await dispacth(actions.productRdx.set_list_produk(res.data, true))
         setTimeout(() => {
           showToast('Berhasil menambah produk')
         },500)

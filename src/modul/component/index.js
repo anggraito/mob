@@ -22,6 +22,7 @@ export default function HomeScreen({navigation}) {
   const pickerRef = useRef()
   const dispacth = useDispatch()
   const listSeller = useSelector(state => state.seller)
+  const {successAdd} = useSelector(state => state.product)
   
   useEffect(() => {
     if (idSeller > 0) {
@@ -36,6 +37,12 @@ export default function HomeScreen({navigation}) {
     searchProductAPI()}
   }, [searchProduk])
 
+  useEffect(() => {
+    if (successAdd){
+    setLoadData(true)
+    getListProductAPI()}
+  }, [successAdd])
+
   const getListProductAPI = () => {
     const query = `/listProductBySellerId?seller_id=${idSeller}`
     dispacth(actions.productAPI.get_list_product(query))
@@ -43,7 +50,7 @@ export default function HomeScreen({navigation}) {
       console.log('--INI RES------', res)
       if (res.code === 200) {
         setListProduk(res.data)
-        await dispacth(actions.productRdx.set_list_produk(res.data))
+        await dispacth(actions.productRdx.set_list_produk(res.data, false))
       }
       setLoadData(false)
       if (idSeller > 0 )handleResponse(res)
@@ -63,7 +70,7 @@ export default function HomeScreen({navigation}) {
     })
   }
 
-  console.log('listP', listProduk)
+  console.log('listP', listProduk, successAdd)
   return (
     <View style={BG_SET}>
       <HeaderNav colorStatus={WHITE} title="Mob App" headerVal   />
