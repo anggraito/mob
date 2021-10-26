@@ -23,25 +23,20 @@ export default function HomeScreen({navigation}) {
   const dispacth = useDispatch()
   const listSeller = useSelector(state => state.seller)
   const {successAdd} = useSelector(state => state.product)
+
+  useState(() => {
+    setIdSeller(0)
+  },[])
   
   useEffect(() => {
-    if (idSeller > 0) {
+    if (idSeller > 0 || successAdd ) {
       setLoadData(true)
       getListProductAPI()
+    } else if (searchProduk !== '') {
+      setLoadData(true)
+      searchProductAPI()
     }
-  }, [idSeller])
-
-  useEffect(() => {
-    if (searchProduk !== ''){
-    setLoadData(true)
-    searchProductAPI()}
-  }, [searchProduk])
-
-  useEffect(() => {
-    if (successAdd){
-    setLoadData(true)
-    getListProductAPI()}
-  }, [successAdd])
+  }, [idSeller, searchProduk, successAdd])
 
   const getListProductAPI = () => {
     const query = `/listProductBySellerId?seller_id=${idSeller}`
@@ -70,11 +65,10 @@ export default function HomeScreen({navigation}) {
     })
   }
 
-  console.log('listP', listProduk, successAdd)
   return (
     <View style={BG_SET}>
       <HeaderNav colorStatus={WHITE} title="Mob App" headerVal   />
-      <View style={{paddingHorizontal: 20, paddingVertical: 15}}>
+      <View style={{paddingHorizontal: 20, flex: 1}}>
         <View style={{flexDirection: 'row', justifyContent: 'space-between', marginVertical: 15}}>
           <TouchableOpacity onPress={() => navigation.navigate('AddSellerScreen')}
           style={{flex: 1, ...SHADOW_LIGHT, backgroundColor: WHITE, height: normalize(90), width: SCREEN_WIDTH/3, borderRadius: 8, marginHorizontal: 5, ...ITEM_CENTER}}>
@@ -105,6 +99,7 @@ export default function HomeScreen({navigation}) {
             <Picker.Item label='Pilih penjual...' value={0} />
             {listSeller.data.map((item, idx) => <Picker.Item label={item.nama} value={item.id} key={idx.toString()} />)}
         </Picker>
+        
         {listSeller.data.length === 0 && <Text style={Font10('OpenSans-Light', ORANGE_TOMATO)}>Jika penjual kosong, input terlebih dahulu di menu penjual</Text>}
         <TouchableOpacity onPress={() => getListProductAPI()}>
           <Text style={[Font14('OpenSans-Regular'), {marginVertical: 10}]}>Daftar List Produk</Text>
@@ -114,7 +109,7 @@ export default function HomeScreen({navigation}) {
         <View style={{marginTop: SCREEN_WIDTH/3, alignItems: 'center'}}>
           <Text style={[Font12('OpenSans-Regular'), {textAlign: 'center'}]}>{`Belum ada produk\n silakan tambah produk`}</Text>
         </View>
-        : <View>
+        : <View style={{flex: 1}}>
           <View style={{backgroundColor: MIDNIGHTBLUE, flexDirection: 'row', padding: 5, borderBottomColor: WHITE, borderBottomWidth: 1}}>
             <Text style={{flex: 0.5, ...Font12('OpenSans-Bold', WHITE), textAlign: 'center'}}>No</Text>
             <Text style={{flex: 1, ...Font12('OpenSans-Bold', WHITE)}}>Nama Produk</Text>
@@ -125,7 +120,7 @@ export default function HomeScreen({navigation}) {
           <FlatList data={listProduk}
             keyExtractor={({item, index}) => index}
             renderItem={({item, index}) => (
-              <CardList item={item} key={index} idx={index} />
+              <CardList item={item} key={index} idx={index} bottomSpace={index === listProduk.length -1} />
           )} />
           </View>
         }
