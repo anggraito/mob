@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { FlatList, TextInput, TouchableOpacity, View, Text } from 'react-native'
+import { FlatList, TextInput, TouchableOpacity, View, Text, ActivityIndicator } from 'react-native'
 import IconFe from 'react-native-vector-icons/Feather'
 import {Picker} from '@react-native-picker/picker'
 import { useDispatch, useSelector } from 'react-redux'
 import { BG_SET, BORDERLINE, Font10, Font12, Font14, ITEM_CENTER, LIGHTLATE, 
+  MIDNIGHTBLUE, 
   ORANGE_TOMATO, 
   SCREEN_WIDTH, SHADOW_LIGHT, WHITE } from '../../helpers/globalStyles'
 import { normalize } from '../../helpers/scallingSize'
@@ -23,14 +24,33 @@ export default function HomeScreen({navigation}) {
   const listSeller = useSelector(state => state.seller)
   
   useEffect(() => {
+    setLoadData(true)
     getListProductAPI()
   }, [idSeller])
 
   const getListProductAPI = () => {
     const query = `/listProductBySellerId?seller_id=${idSeller}`
     dispacth(actions.productAPI.get_list_product(query))
-    .then(res => {
+    .then(async(res) => {
       console.log('--INI RES------', res)
+      if (res.code === 200) {
+        setListProduk(res.data)
+        await dispacth(actions.produkRdx.set_list_seller(res.data))
+      }
+      setLoadData(false)
+      handleResponse(res)
+    })
+  }
+
+  const searchProductAPI = () => {
+    const query = `/searchProductByKeyword?keyword=${searchProduk}`
+    dispacth(actions.productAPI.get_list_product(query))
+    .then((res) => {
+      console.log('--INI RES------', res)
+      if (res.code === 200) {
+        setListProduk(res.data)
+      }
+      setLoadData(false)
       handleResponse(res)
     })
   }
@@ -72,7 +92,8 @@ export default function HomeScreen({navigation}) {
         <TouchableOpacity onPress={() => getListProductAPI()}>
           <Text style={[Font14('OpenSans-Regular'), {marginVertical: 10}]}>Daftar List Produk</Text>
         </TouchableOpacity>
-        {listProduk.length === 0 ?
+        { loadData ? <ActivityIndicator size='small' color={MIDNIGHTBLUE} style={{marginTop: SCREEN_WIDTH/3, alignItems: 'center'}} />
+        : listProduk.length === 0 ?
         <View style={{marginTop: SCREEN_WIDTH/3, alignItems: 'center'}}>
           <Text style={[Font12('OpenSans-Regular'), {textAlign: 'center'}]}>{`Belum ada produk\n silakan tambah produk`}</Text>
         </View>
