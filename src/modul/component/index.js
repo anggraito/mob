@@ -3,7 +3,7 @@ import { FlatList, TextInput, TouchableOpacity, View, Text, ActivityIndicator } 
 import IconFe from 'react-native-vector-icons/Feather'
 import {Picker} from '@react-native-picker/picker'
 import { useDispatch, useSelector } from 'react-redux'
-import { BG_SET, BORDERLINE, Font10, Font12, Font14, ITEM_CENTER, LIGHTLATE, 
+import { BG_SET, BORDERLINE, DARKSLATE, Font10, Font12, Font14, ITEM_CENTER, LIGHTLATE, 
   MIDNIGHTBLUE, 
   ORANGE_TOMATO, 
   SCREEN_WIDTH, SHADOW_LIGHT, WHITE } from '../../helpers/globalStyles'
@@ -24,9 +24,17 @@ export default function HomeScreen({navigation}) {
   const listSeller = useSelector(state => state.seller)
   
   useEffect(() => {
-    setLoadData(true)
-    getListProductAPI()
+    if (idSeller > 0) {
+      setLoadData(true)
+      getListProductAPI()
+    }
   }, [idSeller])
+
+  useEffect(() => {
+    if (searchProduk !== ''){
+    setLoadData(true)
+    searchProductAPI()}
+  }, [searchProduk])
 
   const getListProductAPI = () => {
     const query = `/listProductBySellerId?seller_id=${idSeller}`
@@ -35,10 +43,10 @@ export default function HomeScreen({navigation}) {
       console.log('--INI RES------', res)
       if (res.code === 200) {
         setListProduk(res.data)
-        await dispacth(actions.produkRdx.set_list_seller(res.data))
+        await dispacth(actions.productRdx.set_list_produk(res.data))
       }
       setLoadData(false)
-      handleResponse(res)
+      if (idSeller > 0 )handleResponse(res)
     })
   }
 
@@ -46,7 +54,7 @@ export default function HomeScreen({navigation}) {
     const query = `/searchProductByKeyword?keyword=${searchProduk}`
     dispacth(actions.productAPI.get_list_product(query))
     .then((res) => {
-      console.log('--INI RES------', res)
+      console.log('--INI RES SEARCH------', res)
       if (res.code === 200) {
         setListProduk(res.data)
       }
@@ -55,6 +63,7 @@ export default function HomeScreen({navigation}) {
     })
   }
 
+  console.log('listP', listProduk)
   return (
     <View style={BG_SET}>
       <HeaderNav colorStatus={WHITE} title="Mob App" headerVal   />
@@ -84,6 +93,7 @@ export default function HomeScreen({navigation}) {
           style={{backgroundColor: BORDERLINE}}
           onValueChange={(itemValue, itemIndex) =>{
             setIdSeller(itemValue)
+            setListProduk([])
           }}>
             <Picker.Item label='Pilih penjual...' value={0} />
             {listSeller.data.map((item, idx) => <Picker.Item label={item.nama} value={item.id} key={idx.toString()} />)}
@@ -97,12 +107,21 @@ export default function HomeScreen({navigation}) {
         <View style={{marginTop: SCREEN_WIDTH/3, alignItems: 'center'}}>
           <Text style={[Font12('OpenSans-Regular'), {textAlign: 'center'}]}>{`Belum ada produk\n silakan tambah produk`}</Text>
         </View>
-        : <FlatList data={listProduk} horizontal={true}
-        showsHorizontalScrollIndicator={false}
-        keyExtractor={({item, index}) => index}
-        renderItem={({item, index}) => (
-          <CardList item={item} />
-        )} />}
+        : <View>
+          <View style={{backgroundColor: MIDNIGHTBLUE, flexDirection: 'row', padding: 5, borderBottomColor: WHITE, borderBottomWidth: 1}}>
+            <Text style={{flex: 0.5, ...Font12('OpenSans-Bold', WHITE), textAlign: 'center'}}>No</Text>
+            <Text style={{flex: 1, ...Font12('OpenSans-Bold', WHITE)}}>Nama Produk</Text>
+            <Text style={{flex: 2.5, ...Font12('OpenSans-Bold', WHITE)}}>Deskripsi</Text>
+            <Text style={{flex: 0.5, ...Font12('OpenSans-Bold', WHITE), textAlign: 'center'}}>Satuan</Text>
+            <Text style={{flex: 1.5, ...Font12('OpenSans-Bold', WHITE), textAlign: 'center'}}>Harga</Text>
+          </View>
+          <FlatList data={listProduk}
+            keyExtractor={({item, index}) => index}
+            renderItem={({item, index}) => (
+              <CardList item={item} key={index} idx={index} />
+          )} />
+          </View>
+        }
       </View>
     </View>
   )
