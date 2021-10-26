@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react'
 import { FlatList, TextInput, TouchableOpacity, View, Text, Modal, ActivityIndicator } from 'react-native'
 import IconFe from 'react-native-vector-icons/Feather'
-import {Picker} from '@react-native-picker/picker'
 import { useDispatch, useSelector } from 'react-redux'
+import {Picker} from '@react-native-picker/picker'
 import { BG_SET, BORDERLINE, Font16, ITEM_CENTER, OPACITY_BLACK_5, SCREEN_WIDTH, 
   STEELBLUE, WHITE, Font12, Font10, ORANGE_TOMATO, LIGHTLATE } from '../../../helpers/globalStyles'
 import { normalize } from '../../../helpers/scallingSize'
@@ -25,8 +25,6 @@ export default function AddProduct({navigation}) {
   const pickerRef = useRef()
   const dispacth = useDispatch()
   const listSeller = useSelector(state => state.seller)
-
-  console.log('listSeller',listSeller)
 
   const validationSubmit = () => {
     if (idSeller == 0) {showToast('Pilih seller dahulu');return false}
@@ -82,8 +80,8 @@ export default function AddProduct({navigation}) {
             onValueChange={(itemValue, itemIndex) =>
               setIdSeller(itemValue)
             }>
-              <Picker.Item label='Pilih seller...' value='0' />
-              {listSeller.data.map(item => <Picker.Item label={item.nama} value={item.id} />)}
+              <Picker.Item label='Pilih seller...' value={0} />
+              {listSeller.data.map((item, idx) => <Picker.Item label={item.nama} value={item.id} key={idx.toString()} />)}
           </Picker>
           {listSeller.data.length === 0 && <Text style={Font10('OpenSans-Light', ORANGE_TOMATO)}>Jika seller kosong, input seller terlebih dahulu di menu seller</Text>}
           
