@@ -7,6 +7,7 @@ actionsAPI.get_list_product = (query) => {
   return async () => {
     try {
       let url = `${constants.URL}${query}`
+      console.log('URL', url)
       const res = await axios.get(url, {
         headers: {
           'Content-Type': 'application/json'

@@ -10,6 +10,7 @@ import { normalize } from '../../helpers/scallingSize'
 import CardList from '../fragment/cardList'
 import actions from '../../redux/actions'
 import HeaderNav from '../fragment/header'
+import { handleResponse } from '../../helpers/toastMessage'
 
 export default function HomeScreen({navigation}) {
   const [searchProduk, setSearchProduk] = useState('')
@@ -26,10 +27,11 @@ export default function HomeScreen({navigation}) {
   }, [idSeller])
 
   const getListProductAPI = () => {
-    const query = `listProductBySellerId` //?seller_id=${sellerId}`
+    const query = `/listProductBySellerId?seller_id=${idSeller}`
     dispacth(actions.productAPI.get_list_product(query))
     .then(res => {
       console.log('--INI RES------', res)
+      handleResponse(res)
     })
   }
 
@@ -60,9 +62,9 @@ export default function HomeScreen({navigation}) {
           ref={pickerRef}
           selectedValue={idSeller}
           style={{backgroundColor: BORDERLINE}}
-          onValueChange={(itemValue, itemIndex) =>
+          onValueChange={(itemValue, itemIndex) =>{
             setIdSeller(itemValue)
-          }>
+          }}>
             <Picker.Item label='Pilih penjual...' value={0} />
             {listSeller.data.map((item, idx) => <Picker.Item label={item.nama} value={item.id} key={idx.toString()} />)}
         </Picker>
