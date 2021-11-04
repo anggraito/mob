@@ -14,11 +14,14 @@ import HeaderNav from '../../fragment/header'
 export default function AddSeller({navigation}) {
   const [nameVal, setNameVal] = useState('')
   const [cityVal, setCityVal] = useState('')
+  const [typeVal, setTypeVal] = useState(null)
+  const [yearsVal, setYearsVal] = useState(null)
   const [createLoading, setCreateLoading] = useState('')
 
   const dispacth = useDispatch()
 
   const saveSellerAPI = () => {
+    console.log('--typeVal', typeof typeVal)
     if (nameVal === '' || cityVal === '') {
       showToast('Isi kolom nama dan kota terlebih dahulu')
       return false
@@ -26,7 +29,9 @@ export default function AddSeller({navigation}) {
     setCreateLoading(true)
     const body = {
       nama: nameVal,
-      kota: cityVal
+      kota: cityVal,
+      jenis: typeVal,
+      tahunBerdiri: yearsVal
     } 
     dispacth(action.sellerAPI.post_seller(body, dispacth))
     .then(async(res) => {
@@ -34,6 +39,8 @@ export default function AddSeller({navigation}) {
         await dispacth(action.sellerRdx.set_list_seller(res.data))
         setNameVal('')
         setCityVal('')
+        setTypeVal(null)
+        setYearsVal(null)
         setTimeout(() => {
           showToast('Berhasil menambah penjual')
         }, 500)
@@ -57,6 +64,14 @@ export default function AddSeller({navigation}) {
         <TextInput placeholder={'kota'}
         style={{borderWidth: 0.8, borderColor: BORDERLINE, paddingHorizontal: 15, borderRadius: 8, marginVertical: 5}}
         value={cityVal} onChangeText={(text) => setCityVal(text)} />
+
+        <TextInput placeholder={'jenis'}
+        style={{borderWidth: 0.8, borderColor: BORDERLINE, paddingHorizontal: 15, borderRadius: 8, marginVertical: 5}}
+        value={typeVal} onChangeText={(text) => setTypeVal(text)} />
+
+        <TextInput placeholder={'tahun berdiri'}
+        style={{borderWidth: 0.8, borderColor: BORDERLINE, paddingHorizontal: 15, borderRadius: 8, marginVertical: 5}}
+        value={yearsVal} onChangeText={(text) => setYearsVal(text)} />
       </View>
       <View style={{height: normalize(60), justifyContent: 'flex-end'}}>
         <TouchableOpacity onPress={() => saveSellerAPI()} style={{backgroundColor: STEELBLUE, ...ITEM_CENTER, flex: 1}}>
