@@ -39,8 +39,8 @@ export default function DetailSeller({navigation, route}) {
         <View style={{flex: 1, backgroundColor: WHITE, paddingVertical: 5}}>
           <Text style={styles.textLatte}>{detailSeller.nama}</Text>
           <Text style={styles.textLatte}>{detailSeller.kota}</Text>
-          <Text style={styles.textLatte}>{detailSeller.jenis}</Text>
-          <Text style={styles.textLatte}>{detailSeller.tahunBerdiri}</Text>
+          <Text style={styles.textLatte}>{detailSeller.jenis == null ? '-' : detailSeller.jenis}</Text>
+          <Text style={styles.textLatte}>{detailSeller.tahunBerdiri == null ? '-' : detailSeller.tahunBerdiri}</Text>
         </View>
       </View>
       

@@ -49,8 +49,8 @@ export default function SellerList({navigation}){
               <Text style={{flex: 0.5, textAlign: 'center'}}>{index+1}</Text>
               <Text style={{flex: 2}}>{item.nama}</Text>
               <Text style={{flex: 2}}>{item.kota}</Text>
-              <Text style={{flex: 1}}>{item.jenis}</Text>
-              <Text style={{flex: 1, textAlign: 'center'}}>{item.tahunBerdiri}</Text>
+              <Text style={{flex: 1}}>{item.jenis == null ? '-' : item.jenis}</Text>
+              <Text style={{flex: 1, textAlign: 'center'}}>{item.tahunBerdiri == null ? '-' : item.tahunBerdiri}</Text>
               <IconFE style={{flex: 0.5}} name='arrow-right' size={15} color={DARKSLATE} />
             </TouchableOpacity>
           )} />
