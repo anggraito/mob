@@ -28,7 +28,7 @@ export default function DetailSeller({navigation, route}) {
 
   return(
     <View style={{flex: 1}}>
-      <HeaderNav title={'Detail seller'} navigation={navigation} />
+      <HeaderNav title={'Detail Penjual'} navigation={navigation} />
       <View style={{flexDirection: 'row', padding: 10}}>
         <View style={{flex: 1, backgroundColor: MIDNIGHTBLUE, paddingVertical: 5}}>
           <Text style={styles.textWhite}>Nama</Text>

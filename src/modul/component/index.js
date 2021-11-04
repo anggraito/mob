@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { FlatList, TextInput, TouchableOpacity, View, Text, ActivityIndicator } from 'react-native'
+import { FlatList, TextInput, TouchableOpacity, View, Text, ActivityIndicator, StyleSheet } from 'react-native'
 import IconFe from 'react-native-vector-icons/Feather'
 import {Picker} from '@react-native-picker/picker'
 import { useDispatch, useSelector } from 'react-redux'
@@ -70,19 +70,19 @@ export default function HomeScreen({navigation}) {
       <View style={{paddingHorizontal: 20, flex: 1}}>
         <View style={{flexDirection: 'row', justifyContent: 'space-between', marginVertical: 15}}>
           <TouchableOpacity onPress={() => navigation.navigate('AddSellerScreen')}
-          style={{flex: 1, ...SHADOW_LIGHT, backgroundColor: WHITE, height: normalize(90), width: SCREEN_WIDTH/3, borderRadius: 8, marginHorizontal: 5, ...ITEM_CENTER}}>
-            <IconFe name='plus' size={30} />
-            <Text style={Font14('OpenSans-SemiBold')}>Penjual</Text>
+            style={styles.boxButton}>
+            <IconFe name='user-plus' size={25} />
+            <Text style={styles.textBox}>{`Tambah\nPenjual`}</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('AddProductScreen')}
-          style={{flex: 1, ...SHADOW_LIGHT, backgroundColor: WHITE, height: normalize(90), width: SCREEN_WIDTH/3, borderRadius: 8, marginHorizontal: 5, ...ITEM_CENTER}}>
-            <IconFe name='plus' size={30} />
-            <Text style={Font14('OpenSans-SemiBold')}>Produk</Text>
+            style={styles.boxButton}>
+            <IconFe name='plus-square' size={26} />
+            <Text style={styles.textBox}>{`Tambah\nProduk`}</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => navigation.navigate('SellerListScreen')}
-          style={{flex: 1, ...SHADOW_LIGHT, backgroundColor: WHITE, height: normalize(90), width: SCREEN_WIDTH/3, borderRadius: 8, marginHorizontal: 5, ...ITEM_CENTER}}>
-            <IconFe name='plus' size={30} />
-            <Text style={Font14('OpenSans-SemiBold')}>List Seller</Text>
+            style={styles.boxButton}>
+            <IconFe name='users' size={25} />
+            <Text style={styles.textBox}>{`Daftar\nPenjual`}</Text>
           </TouchableOpacity>
         </View>
 
@@ -132,3 +132,21 @@ export default function HomeScreen({navigation}) {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  boxButton: {
+    flex: 1, 
+    ...SHADOW_LIGHT, 
+    backgroundColor: WHITE, 
+    height: normalize(90), 
+    width: SCREEN_WIDTH/3, 
+    borderRadius: 8, 
+    marginHorizontal: 5, 
+    ...ITEM_CENTER,
+  },
+  textBox: {
+    ...Font12('OpenSans-SemiBold'),
+    textAlign: 'center',
+    marginTop: 5
+  }
+})
