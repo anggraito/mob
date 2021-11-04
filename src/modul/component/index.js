@@ -29,8 +29,7 @@ export default function HomeScreen({navigation}) {
   },[])
   
   useEffect(() => {
-    console.log('test---', idSeller, successAdd, searchProduk)
-    if (idSeller > 0 || successAdd ) {
+    if (idSeller > 0 || successAdd == true ) {
       setLoadData(true)
       getListProductAPI()
     } else if (searchProduk !== '') {
@@ -43,22 +42,20 @@ export default function HomeScreen({navigation}) {
     const query = `/listProductBySellerId?seller_id=${idSeller}`
     dispacth(actions.productAPI.get_list_product(query))
     .then(async(res) => {
-      // console.log('--INI RES------', res)
       if (res.code === 200) {
         setListProduk(res.data)
         await dispacth(actions.productRdx.set_list_produk(res.data, false))
       }
       setLoadData(false)
       if (idSeller > 0 )handleResponse(res)
+      setIdSeller(0)
     })
   }
 
   const searchProductAPI = () => {
     const query = `/searchProductByKeyword?keyword=${searchProduk}`
-    console.log('-----------query', query)
     dispacth(actions.productAPI.get_list_product(query))
     .then((res) => {
-      // console.log('--INI RES SEARCH------', res)
       if (res.code === 200) {
         setListProduk(res.data)
       }
@@ -82,13 +79,12 @@ export default function HomeScreen({navigation}) {
             <IconFe name='plus' size={30} />
             <Text style={Font14('OpenSans-SemiBold')}>Produk</Text>
           </TouchableOpacity>
-        </View>
-
-        <TouchableOpacity onPress={() => navigation.navigate('SellerListScreen')}
+          <TouchableOpacity onPress={() => navigation.navigate('SellerListScreen')}
           style={{flex: 1, ...SHADOW_LIGHT, backgroundColor: WHITE, height: normalize(90), width: SCREEN_WIDTH/3, borderRadius: 8, marginHorizontal: 5, ...ITEM_CENTER}}>
             <IconFe name='plus' size={30} />
             <Text style={Font14('OpenSans-SemiBold')}>List Seller</Text>
           </TouchableOpacity>
+        </View>
 
         <View style={{marginBottom: 15}}>
           <TextInput placeholder='cari produk' style={{height: normalize(52), backgroundColor: WHITE, borderWidth: 0.8, borderColor: BORDERLINE, borderRadius: 8, paddingRight: 15, paddingLeft: 45}}
