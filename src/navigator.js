@@ -8,6 +8,8 @@ import SplaschScreen from './modul/splashScreen'
 import HomeScreen from './modul/component'
 import AddSeller from './modul/component/Seller/AddSeller'
 import AddProduct from './modul/component/Product/AddProduct'
+import SellerList from './modul/component/Seller/sellerList'
+import DetailSeller from './modul/component/Seller/detailSeller'
 
 
 const Stack = createStackNavigator();
@@ -19,6 +21,8 @@ const navigationScreen = [
   { name: 'Home', component: HomeScreen },
   { name: 'AddSellerScreen', component: AddSeller },
   { name: 'AddProductScreen', component: AddProduct },
+  { name: 'SellerListScreen', component: SellerList },
+  { name: 'DetailSellerScreen', component: DetailSeller }
 ];
 
 function AppNavigator() {
